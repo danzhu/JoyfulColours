@@ -46,9 +46,9 @@ namespace JoyfulColours.Library
             RegisterType(".atr", l => new ActorTemplate(l));
             RegisterType(".adn", l => new AddonTemplate(l));
             RegisterType(".mt", l => new ModelTemplate(l));
-            RegisterType(".anm", l => new AnimationTemplate(l));
+            RegisterType(".pos", l => new AnimationPose(l));
             RegisterType(".eqp", l => new EquipmentTemplate(l));
-            RegisterType(".alp", l => new AnimationGroup(l));
+            RegisterType(".anm", l => new ModelAnimation(l));
             RegisterType(".obj", l => new ModelObject(l));
             RegisterType(".mtl", l => new MaterialLibrary(l));
             RegisterType(".cam", l => new Cam(l));

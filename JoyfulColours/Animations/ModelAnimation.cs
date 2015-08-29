@@ -1,117 +1,53 @@
 ﻿using JoyfulColours.Elements;
+using JoyfulColours.Library;
+using JoyfulColours.Procedures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
 
 namespace JoyfulColours.Animations
 {
-    /// <summary>
-    /// A single animation between two states of a model.
-    /// </summary>
-    public class ModelAnimation : Animation
+    public class ModelAnimation
     {
-        public Model Model { get; }
+        public List<StepTemplate> Templates { get; } = new List<StepTemplate>();
 
-        public bool IsAbsolute { get; set; } = true;
+        public double Duration => Templates.Sum(t => t.Duration);
+        public int StopIndex { get; set; } = -1;
 
-        public List<TranslateTransform3D> Translations { get; }
-            = new List<TranslateTransform3D>();
-        public List<Vector3D> TranslationTargets { get; }
-            = new List<Vector3D>();
-        List<Vector3D> startTranslations = new List<Vector3D>();
-        List<Vector3D> deltaTranslations = new List<Vector3D>();
-
-        public List<AxisAngleRotation3D> Rotations { get; }
-            = new List<AxisAngleRotation3D>();
-        public List<double> RotationTargets { get; }
-            = new List<double>();
-        List<double> startRotations = new List<double>();
-        List<double> deltaRotations = new List<double>();
-
-        public ModelAnimation()
+        public ModelAnimation(Loader l)
         {
-            Started += Start;
-            Updated += Update;
-        }
-
-        public ModelAnimation(Model model, AnimationTemplate template) : this()
-        {
-            Model = model;
-
-            IsAbsolute = template.IsAbsolute;
-            Duration = template.Duration;
-            Easing = template.Easing;
-
-            // Master transform
-            if (template.Translation != null)
-                AddTranslation(model.Translation, (Vector3D)template.Translation);
-            if (template.Rotation != null)
-                AddRotation(model.Rotation, (double)template.Rotation);
-
-            // Node transform
-            foreach (var item in template.Translations)
-                AddTranslation(Model.Nodes[item.Key].Translation, item.Value);
-            foreach (var item in template.PrimaryRotations)
-                AddRotation(Model.Nodes[item.Key].PrimaryRotation, item.Value);
-            foreach (var item in template.SecondaryRotations)
-                AddRotation(Model.Nodes[item.Key].PrimaryRotation, item.Value);
-        }
-
-        public void AddTranslation(TranslateTransform3D t, Vector3D end)
-        {
-            Translations.Add(t);
-            TranslationTargets.Add(end);
-        }
-
-        public void AddRotation(AxisAngleRotation3D r, double end)
-        {
-            Rotations.Add(r);
-            RotationTargets.Add(end);
-        }
-
-        private void Start(object sender, EventArgs e)
-        {
-            startTranslations.Clear();
-            deltaTranslations.Clear();
-            startRotations.Clear();
-            deltaRotations.Clear();
-            for (int i = 0; i < Translations.Count; i++)
+            foreach (Instruction i in l.Parse())
             {
-                TranslateTransform3D t = Translations[i];
-                Vector3D end = TranslationTargets[i];
-
-                Vector3D start = new Vector3D(t.OffsetX, t.OffsetY, t.OffsetZ);
-                startTranslations.Add(start);
-                deltaTranslations.Add(IsAbsolute ? end - start : end);
-            }
-            for (int i = 0; i < Rotations.Count; i++)
-            {
-                AxisAngleRotation3D r = Rotations[i];
-                double end = RotationTargets[i];
-
-                startRotations.Add(r.Angle);
-                deltaRotations.Add(IsAbsolute ? end - r.Angle : end);
+                switch (i.Type)
+                {
+                    case "anim":
+                        AnimationPose pose = l.Find(i.String()).Load<AnimationPose>();
+                        Templates.Add(new StepTemplate(pose));
+                        if (i.HasNext && i.String() == "-stop")
+                            StopIndex = Templates.Count - 1;
+                        break;
+                    case "dur":
+                        Templates.Last().Duration = i.Double();
+                        break;
+                    case "ease":
+                        Templates.Last().Easing = Easings.Map[i.String()];
+                        break;
+                }
             }
         }
-
-        private void Update(object sender, EventArgs e)
+        
+        public Sequence Create(Model model)
         {
-            for (int i = 0; i < Translations.Count; i++)
-            {
-                TranslateTransform3D t = Translations[i];
-                Vector3D r = startTranslations[i] + deltaTranslations[i] * Progress;
-                t.OffsetX = r.X;
-                t.OffsetY = r.Y;
-                t.OffsetZ = r.Z;
-            }
-            for (int i = 0; i < Rotations.Count; i++)
-            {
-                Rotations[i].Angle = startRotations[i] + deltaRotations[i] * Progress;
-            }
+            List<Procedure> list = new List<Procedure>();
+            foreach (StepTemplate template in Templates)
+                list.Add(new AnimationStep(template, model));
+
+            if (StopIndex != -1)
+                return new Sequence(list, StopIndex);
+            else
+                return new Sequence(list);
         }
     }
-
 }

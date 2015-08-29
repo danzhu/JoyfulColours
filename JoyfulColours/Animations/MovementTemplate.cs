@@ -11,8 +11,8 @@ namespace JoyfulColours.Animations
 {
     public class MovementTemplate
     {
-        public AnimationGroup Animation { get; set; }
-        public AnimationTemplate Completion { get; set; }
+        public ModelAnimation Animation { get; set; }
+        public ModelAnimation Completion { get; set; }
 
         public Position3D PositionOffset { get; set; }
         public int DirectionOffset { get; set; }
@@ -30,7 +30,7 @@ namespace JoyfulColours.Animations
             switch (i.Type)
             {
                 case "anim":
-                    Animation = l.Resource<AnimationGroup>(i.String());
+                    Animation = l.Resource<ModelAnimation>(i.String());
                     break;
                 case "speed":
                     Speed = i.Double();
@@ -45,7 +45,7 @@ namespace JoyfulColours.Animations
                     FollowDirection = i.Bool();
                     break;
                 case "cmp":
-                    Completion = l.Resource<AnimationTemplate>(i.String());
+                    Completion = l.Resource<ModelAnimation>(i.String());
                     break;
             }
         }

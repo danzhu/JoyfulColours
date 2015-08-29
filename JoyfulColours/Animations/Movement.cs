@@ -17,7 +17,7 @@ namespace JoyfulColours.Animations
 
         public Sequence Animation { get; }
         public MovementAnimation MovementAnimation { get; }
-        public ModelAnimation Completion { get; }
+        public Sequence Completion { get; }
 
         Animation timeout;
         Position3D pos;
@@ -34,7 +34,7 @@ namespace JoyfulColours.Animations
             MovementAnimation = new MovementAnimation(actor);
             MovementAnimation.Duration = template.Animation.Duration / template.Speed;
 
-            Completion = new ModelAnimation(actor, template.Completion);
+            Completion = template.Completion.Create(actor);
             Completion.Completed += TestMovement;
 
             timeout = new Animation(0.1);

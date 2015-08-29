@@ -63,14 +63,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Animations\AnimationGroup.cs" />
-    <Compile Include="Animations\CamAnimation.cs" />
     <Compile Include="Animations\ModelAnimation.cs" />
-    <Compile Include="Animations\AnimationTemplate.cs" />
+    <Compile Include="Animations\CamAnimation.cs" />
+    <Compile Include="Animations\AnimationStep.cs" />
+    <Compile Include="Animations\AnimationPose.cs" />
     <Compile Include="Animations\FadeAnimation.cs" />
     <Compile Include="Animations\Movement.cs" />
     <Compile Include="Animations\MovementTemplate.cs" />
     <Compile Include="Animations\MovementAnimation.cs" />
+    <Compile Include="Animations\StepTemplate.cs" />
     <Compile Include="Logic\Control.cs" />
     <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ActorTemplate.cs" />
