@@ -17,6 +17,7 @@ namespace JoyfulColours.Animations
 
         public Sequence Animation { get; }
         public ModelAnimation MovementAnimation { get; }
+        public ModelAnimation Completion { get; }
 
         Animation timeout;
 
@@ -26,7 +27,7 @@ namespace JoyfulColours.Animations
             Actor = actor;
 
             Animation = template.Animation.Create(actor);
-            Animation.Completed += TestMovement;
+            Animation.Completed += TestContinuation;
 
             MovementAnimation = new ModelAnimation();
             MovementAnimation.Duration = template.Animation.Duration / template.Speed;
@@ -34,17 +35,28 @@ namespace JoyfulColours.Animations
             MovementAnimation.AddTranslation(actor.Translation, new Vector3D());
             MovementAnimation.AddRotation(actor.Rotation, 0);
 
+            Completion = new ModelAnimation(actor, template.Completion);
+            Completion.Completed += (sender, e) => Complete();
+
             timeout = new Animation(0.1);
             timeout.Completed += TestMovement;
 
             Started += TestMovement;
         }
-        
-        private void TestMovement(object sender, EventArgs e)
+
+        private void TestContinuation(object sender, EventArgs e)
         {
             // TODO: Fix bottleneck
+            if (!IsStopping && Actor.Move(this))
+                StartAnimation();
+            else
+                Completion.Start();
+        }
+
+        private void TestMovement(object sender, EventArgs e)
+        {
             if (IsStopping)
-                CompleteAnimation();
+                Complete();
             else if (Actor.Move(this))
                 StartAnimation();
             else
@@ -59,12 +71,7 @@ namespace JoyfulColours.Animations
             Animation.Start();
             MovementAnimation.Start();
         }
-
-        private void CompleteAnimation()
-        {
-            Complete();
-        }
-
+        
         protected override void OnStopping(EventArgs e)
         {
             base.OnStopping(e);
