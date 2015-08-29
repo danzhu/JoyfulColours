@@ -33,7 +33,7 @@ namespace JoyfulColours.Elements
                 Children.Add(LoadNode(template.Skeleton.Root));
             else
                 // Else, just load all geometries into the master model
-                LoadGeometries(template);
+                LoadGeometries();
 
             // Load equipments
             foreach (EquipmentTemplate et in template.Equipments)
@@ -63,10 +63,10 @@ namespace JoyfulColours.Elements
             return node;
         }
 
-        private void LoadGeometries(ModelTemplate template)
+        private void LoadGeometries()
         {
             // Add geometries
-            foreach (GeometryModel3D model in template.Model.Geometries.Values)
+            foreach (GeometryModel3D model in Template.Model.Geometries.Values)
             {
                 ModelVisual3D m = new ModelVisual3D();
                 m.Content = model;

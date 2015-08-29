@@ -10,7 +10,7 @@ namespace JoyfulColours.Procedures
     {
         public Action Action { get; }
 
-        public Event(Action action)
+        public Event(Action action = null)
         {
             Action = action;
         }
@@ -18,7 +18,7 @@ namespace JoyfulColours.Procedures
         protected override void OnStarted(EventArgs e)
         {
             base.OnStarted(e);
-            Action();
+            Action?.Invoke();
             Complete();
         }
     }

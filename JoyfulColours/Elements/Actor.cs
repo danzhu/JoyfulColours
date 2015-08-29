@@ -19,7 +19,9 @@ namespace JoyfulColours.Elements
 
         public bool Move(Movement m)
         {
-            if (movement != null && movement != m)
+            if (movement == null)
+                m.Completed += (sender, e) => movement = null;
+            else if (movement != m)
                 return false;
 
             Position3D offset = m.Template.PositionOffset;
@@ -34,7 +36,6 @@ namespace JoyfulColours.Elements
             SetPosition(pos);
             SetDirection(dir);
             movement = m;
-            m.Completed += (sender, e) => movement = null;
             return true;
         }
 
