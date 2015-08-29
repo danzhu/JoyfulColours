@@ -33,7 +33,6 @@ namespace JoyfulColours.Animations
         public static double TimeScale { get; set; } = 1.0;
 
         static List<Animation> animations = new List<Animation>();
-        static HashSet<Animation> queued = new HashSet<Animation>();
 
         static DispatcherTimer timer = new DispatcherTimer();
 
@@ -43,12 +42,7 @@ namespace JoyfulColours.Animations
             timer.Tick += UpdateTime;
             timer.Start();
         }
-
-        public static void Queue(Animation anim)
-        {
-            queued.Add(anim);
-        }
-
+        
         public static void Pause()
         {
             timer.Stop();
@@ -62,18 +56,10 @@ namespace JoyfulColours.Animations
         private static void UpdateTime(object sender, EventArgs e)
         {
             time += TimeScale / fps;
+            
+            List<Animation> copy = new List<Animation>(animations);
 
-            animations.AddRange(queued);
-            queued.Clear();
-
-            animations.ForEach((anim) =>
-            {
-                if (!anim.completed)
-                    anim.Update();
-            });
-            // Remove animations AFTER ALL UPDATES OCCURED
-            // or the list of animations may be modified and cause exception!
-            animations.RemoveAll((a) => a.IsCompleted);
+            copy.ForEach(anim => anim.Update());
         }
 
         #endregion
@@ -85,19 +71,13 @@ namespace JoyfulColours.Animations
 
         double progress;
         public double Progress => progress;
-
-        bool completed;
-        public bool IsCompleted => completed;
-
+        
         public Easing Easing { get; set; } = Easings.Linear;
 
         /// <summary>
         /// Initialize an empty <see cref="Animation"/> that has no duration or action.
         /// </summary>
-        public Animation()
-        {
-
-        }
+        public Animation() { }
 
         /// <summary>
         /// Initialize an empty <see cref="Animation"/> with specified duration.
@@ -120,8 +100,7 @@ namespace JoyfulColours.Animations
         {
             startTime = time;
             progress = 0;
-            completed = false;
-            Queue(this);
+            animations.Add(this);
             base.OnStarted(e);
         }
 
@@ -142,7 +121,7 @@ namespace JoyfulColours.Animations
 
         protected override void OnCompleted(EventArgs e)
         {
-            completed = true;
+            animations.Remove(this);
             base.OnCompleted(e);
         }
 
