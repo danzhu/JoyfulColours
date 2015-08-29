@@ -1,4 +1,5 @@
 ﻿using JoyfulColours.Animations;
+using JoyfulColours.Library;
 using JoyfulColours.Logic;
 using Microsoft.Scripting.Hosting;
 using System;
@@ -39,17 +40,12 @@ namespace JoyfulColours.Elements
                 Equip(new Equipment(et));
 
             // Setup and execute script
-            ScriptScope script = null;
-            if (template.Code != null)
-            {
-                script = Game.Engine.CreateScope();
-                template.Code.Execute(script);
-                script.SetVariable("model", this);
-            }
+            ScriptScope script = template.Code.Load("model", this);
 
             // Add UIs and execute scripts within block
             foreach (var item in template.UITemplates.Values)
             {
+                // TODO: Remove ugly ref
                 item.CreateVisual3D(this, ref script);
             }
             Script = script;
