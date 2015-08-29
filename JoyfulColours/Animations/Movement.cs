@@ -16,10 +16,12 @@ namespace JoyfulColours.Animations
         public Actor Actor { get; }
 
         public Sequence Animation { get; }
-        public ModelAnimation MovementAnimation { get; }
+        public MovementAnimation MovementAnimation { get; }
         public ModelAnimation Completion { get; }
 
         Animation timeout;
+        Position3D pos;
+        Direction dir;
 
         public Movement(MovementTemplate template, Actor actor)
         {
@@ -29,14 +31,11 @@ namespace JoyfulColours.Animations
             Animation = template.Animation.Create(actor);
             Animation.Completed += TestContinuation;
 
-            MovementAnimation = new ModelAnimation();
+            MovementAnimation = new MovementAnimation(actor);
             MovementAnimation.Duration = template.Animation.Duration / template.Speed;
-            MovementAnimation.IsAbsolute = true;
-            MovementAnimation.AddTranslation(actor.Translation, new Vector3D());
-            MovementAnimation.AddRotation(actor.Rotation, 0);
 
             Completion = new ModelAnimation(actor, template.Completion);
-            Completion.Completed += (sender, e) => Complete();
+            Completion.Completed += TestMovement;
 
             timeout = new Animation(0.1);
             timeout.Completed += TestMovement;
@@ -44,10 +43,29 @@ namespace JoyfulColours.Animations
             Started += TestMovement;
         }
 
+        private bool CanMove()
+        {
+            if (Actor.Movement == null)
+                Actor.Movement = this;
+            else if (Actor.Movement != this)
+                return false;
+
+            Position3D offset = Template.PositionOffset;
+            if (Template.FollowDirection)
+                offset = offset.Rotate(Actor.Direction);
+            pos = Actor.Position.Offset(offset);
+
+            if (!Game.Scene.CanPassThrough(pos))
+                return false;
+
+            dir = Actor.Direction.Offset(Template.DirectionOffset);
+            return true;
+        }
+
         private void TestContinuation(object sender, EventArgs e)
         {
             // TODO: Fix bottleneck
-            if (!IsStopping && Actor.Move(this))
+            if (!IsStopping && CanMove())
                 StartAnimation();
             else
                 Completion.Start();
@@ -57,7 +75,7 @@ namespace JoyfulColours.Animations
         {
             if (IsStopping)
                 Complete();
-            else if (Actor.Move(this))
+            else if (CanMove())
                 StartAnimation();
             else
                 timeout.Start();
@@ -65,13 +83,24 @@ namespace JoyfulColours.Animations
 
         private void StartAnimation()
         {
-            // TODO: Make type for MovementAnimation?
-            MovementAnimation.TranslationTargets[0] = Actor.Position;
-            MovementAnimation.RotationTargets[0] = Actor.Direction;
+            MovementAnimation.Position = pos;
+            MovementAnimation.Direction = dir;
             Animation.Start();
             MovementAnimation.Start();
         }
-        
+
+        protected override void OnStarted(EventArgs e)
+        {
+            base.OnStarted(e);
+        }
+
+        protected override void OnCompleted(EventArgs e)
+        {
+            if (Actor.Movement == this)
+                Actor.Movement = null;
+            base.OnCompleted(e);
+        }
+
         protected override void OnStopping(EventArgs e)
         {
             base.OnStopping(e);

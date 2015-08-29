@@ -70,6 +70,7 @@
     <Compile Include="Animations\FadeAnimation.cs" />
     <Compile Include="Animations\Movement.cs" />
     <Compile Include="Animations\MovementTemplate.cs" />
+    <Compile Include="Animations\MovementAnimation.cs" />
     <Compile Include="Logic\Control.cs" />
     <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ActorTemplate.cs" />

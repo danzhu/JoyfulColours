@@ -54,7 +54,7 @@ namespace JoyfulColours.Library
 
         public static Vector3D operator -(Position3D p1, Position3D p2)
         {
-            return new Vector3D(p2.X - p1.X, p2.Y - p1.Y, p2.Z - p1.Z);
+            return new Vector3D(p1.X - p2.X, p1.Y - p2.Y, p1.Z - p2.Z);
         }
         
         public override string ToString() => $"{X}, {Y}, {Z}";
