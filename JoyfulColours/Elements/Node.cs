@@ -12,7 +12,6 @@ namespace JoyfulColours.Elements
         public TranslateTransform3D Translation { get; }
         public AxisAngleRotation3D PrimaryRotation { get; }
         public AxisAngleRotation3D SecondaryRotation { get; }
-        // TODO: Add secondary rotation
 
         public List<Addon> Addons { get; } = new List<Addon>();
 
