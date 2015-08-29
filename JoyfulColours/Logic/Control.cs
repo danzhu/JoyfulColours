@@ -13,13 +13,19 @@ namespace JoyfulColours
 {
     public class Control : Procedure
     {
+        public string ID { get; }
+
         public bool Startup { get; set; }
+
+        public Dictionary<Key, Procedure> Keys { get; } = new Dictionary<Key, Procedure>();
 
         public CompiledCode Code { get; set; }
         public ScriptScope Script { get; set; }
 
         public Control(Loader l)
         {
+            ID = l.ID;
+
             foreach (Instruction i in l.Parse())
                 Load(l, i);
 
@@ -47,7 +53,21 @@ namespace JoyfulColours
         {
             Key k;
             Enum.TryParse(key, out k);
-            Input.Register(this, k, pro);
+            Keys.Add(k, pro);
         }
+
+        protected override void OnStarted(EventArgs e)
+        {
+            Input.Register(this);
+            base.OnStarted(e);
+        }
+
+        protected override void OnCompleted(EventArgs e)
+        {
+            Input.Unregister(this);
+            base.OnCompleted(e);
+        }
+
+        public override string ToString() => $"{nameof(Control)} {ID}";
     }
 }

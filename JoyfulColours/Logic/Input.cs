@@ -1,4 +1,5 @@
-﻿using JoyfulColours.Library;
+﻿using JoyfulColours.Interface;
+using JoyfulColours.Library;
 using JoyfulColours.Procedures;
 using Microsoft.Scripting.Hosting;
 using System;
@@ -26,10 +27,20 @@ namespace JoyfulColours.Logic
                 bindings[e.Key].Stop();
         }
 
-        public static void Register(Control ctrl, Key key, Procedure pro)
+        public static void Register(Control ctrl)
         {
-            // TODO: Enable / disable control
-            bindings[key] = pro;
+            foreach (var item in ctrl.Keys)
+            {
+                if (bindings.ContainsKey(item.Key))
+                    Cinema.Notify($"{ctrl} overrides key \"{item.Key}\"");
+                bindings[item.Key] = item.Value;
+            }
+        }
+
+        public static void Unregister(Control ctrl)
+        {
+            foreach (Key key in ctrl.Keys.Keys)
+                bindings.Remove(key);
         }
     }
 }
