@@ -26,12 +26,17 @@ namespace JoyfulColours.Elements
         {
             Template = template;
 
+            // Load geometries
             if (template.Skeleton != null)
                 // Produce a visual tree if skeleton is defined
                 Children.Add(LoadNode(template.Skeleton.Root));
             else
                 // Else, just load all geometries into the master model
                 LoadGeometries(template);
+
+            // Load equipments
+            foreach (EquipmentTemplate et in template.Equipments)
+                Equip(new Equipment(et));
 
             // Setup and execute script
             ScriptScope script = null;

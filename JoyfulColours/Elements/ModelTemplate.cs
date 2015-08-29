@@ -31,6 +31,8 @@ namespace JoyfulColours.Elements
 
         public Skeleton Skeleton { get; set; }
 
+        public List<EquipmentTemplate> Equipments { get; } = new List<EquipmentTemplate>();
+
         public CompiledCode Code { get; set; }
 
         public ModelTemplate(Loader l)
@@ -46,19 +48,19 @@ namespace JoyfulColours.Elements
             switch (i.Type)
             {
                 case "name":
-                    Name = i.Arg;
+                    Name = i.String();
                     break;
                 case "model":
-                    Model = l.Find(i.Arg).Load<ModelObject>();
+                    Model = l.Resource<ModelObject>(i.String());
                     break;
                 case "dim":
-                    Dimension = new Dimension3D(i.Int(), i.Int(), i.Int());
+                    Dimension = i.Dimension3D();
                     break;
                 case "colli":
                     IsCollidable = i.Bool();
                     break;
                 case "ui":
-                    UITemplate ui = Game.Get<UITemplate>(i.String());
+                    UITemplate ui = l.Resource<UITemplate>(i.String());
                     // Transfer geometry to ui
                     string geo = i.String();
                     UIGeometry model = new UIGeometry(ui, Model.Geometries[geo].Geometry);
@@ -66,10 +68,13 @@ namespace JoyfulColours.Elements
                     UITemplates.Add(geo, model);
                     break;
                 case "skl":
-                    Skeleton = Game.Get<Skeleton>(i.String());
+                    Skeleton = l.Resource<Skeleton>(i.String());
+                    break;
+                case "equip":
+                    Equipments.Add(l.Resource<EquipmentTemplate>(i.String()));
                     break;
                 case "script":
-                    Code = l.Find(i.String()).Load<CompiledCode>();
+                    Code = l.Resource<CompiledCode>(i.String());
                     break;
             }
         }
