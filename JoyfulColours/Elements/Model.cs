@@ -68,13 +68,6 @@ namespace JoyfulColours.Elements
                 Children.Add(m);
             }
         }
-
-        public event EventHandler<RayHitTestResult> Click;
-
-        public virtual void OnClick(RayHitTestResult res)
-        {
-            Click?.Invoke(this, res);
-        }
         
         public void Equip(Equipment equipment)
         {

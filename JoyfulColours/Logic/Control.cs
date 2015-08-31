@@ -9,24 +9,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows;
+using System.Windows.Media;
 
 namespace JoyfulColours
 {
     public class Control : Procedure
     {
+        #region Static
+
         static Dictionary<Key, Procedure> bindings = new Dictionary<Key, Procedure>();
 
         public static void SendKeyDown(KeyEventArgs e)
         {
-            if (bindings.ContainsKey(e.Key))
-                bindings[e.Key].Start();
+            bindings.GetOrDefault(e.Key)?.Start();
+            Event.Raise(typeof(Control), $"{e.Key.ToString()}_down", e);
         }
 
         public static void SendKeyUp(KeyEventArgs e)
         {
-            if (bindings.ContainsKey(e.Key))
-                bindings[e.Key].Stop();
+            bindings.GetOrDefault(e.Key)?.Stop();
+            Event.Raise(typeof(Control), $"{e.Key.ToString()}_up", e);
         }
+
+        public const string Click = "click";
+
+        public static void SendClick(DependencyObject visual, HitTestResult result)
+        {
+            Event.Raise(typeof(Control), Click, visual, result);
+            Event.Raise(visual, Click, result);
+        }
+
+        public const string MouseDown = "mouse_down";
+
+        public static void SendMouseDown(MouseButtonEventArgs e)
+        {
+            Event.Raise(typeof(Control), MouseDown, e);
+        }
+
+        #endregion
 
         public string Name { get; set; }
 

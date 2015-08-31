@@ -102,14 +102,12 @@ namespace JoyfulColours
 
         private void viewport_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (consoleMode)
-            {
-                // Select or deselect object in console mode
-                Point pos = e.GetPosition(viewport);
-                PointHitTestParameters param = new PointHitTestParameters(pos);
-                VisualTreeHelper.HitTest(viewport, null, SelectModel, param);
-                return;
-            }
+            // Select or deselect object in console mode
+            Point pos = e.GetPosition(viewport);
+            PointHitTestParameters param = new PointHitTestParameters(pos);
+            VisualTreeHelper.HitTest(viewport, null, SelectModel, param);
+
+            Control.SendMouseDown(e);
         }
 
         private HitTestResultBehavior SelectModel(HitTestResult result)
@@ -121,14 +119,15 @@ namespace JoyfulColours
                 object model = null, scene = null;
                 while (visual != null)
                 {
-                    if (visual is Model)
+                    if (consoleMode)
                     {
-                        scope.SetVariable("model", model = visual);
-                        if (consoleMode)
-                            ((Model)model).OnClick(res);
+                        if (visual is Model)
+                            scope.SetVariable("model", model = visual);
+                        else if (visual is Scene)
+                            scope.SetVariable("scene", scene = visual);
                     }
-                    else if (visual is Scene)
-                        scope.SetVariable("scene", scene = visual);
+                    else
+                        Control.SendClick(visual, result);
                     visual = VisualTreeHelper.GetParent(visual);
                 }
                 selection.Text = $"Selection: {model} in {scene}";
