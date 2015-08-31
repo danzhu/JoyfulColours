@@ -41,6 +41,7 @@ namespace JoyfulColours
             Game.Engine.Execute("from JoyfulColours.Elements import *", scope);
             Game.Engine.Execute("from JoyfulColours.Interface import *", scope);
             Game.Engine.Execute("from JoyfulColours.Library import *", scope);
+            Game.Engine.Execute("from JoyfulColours.Logic import *", scope);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

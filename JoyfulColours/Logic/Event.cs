@@ -86,21 +86,7 @@ namespace JoyfulColours.Logic
             if (onces.Count == 0 && handlers.Count == 0)
                 return null;
             LogicEventArgs e = new LogicEventArgs(name, args);
-
-            foreach (LogicEventHandler handler in onces)
-            {
-                try
-                {
-                    handler(target, e);
-                }
-                catch (Exception ex)
-                {
-                    Cinema.Notify($"Script once error: {ex}");
-                    throw;
-                }
-            }
-            onces.Clear();
-
+            
             foreach (LogicEventHandler handler in handlers)
             {
                 try
@@ -114,9 +100,14 @@ namespace JoyfulColours.Logic
                 }
 
                 if (e.IsHandled)
-                    return e.Result;
+                    break;
             }
-            return null;
+
+            foreach (LogicEventHandler handler in onces)
+                handlers.Remove(handler);
+            onces.Clear();
+
+            return e.Result;
         }
 
         public void Register(LogicEventHandler handler)
@@ -126,6 +117,7 @@ namespace JoyfulColours.Logic
 
         public void Once(LogicEventHandler handler)
         {
+            handlers.Add(handler);
             onces.Add(handler);
         }
 

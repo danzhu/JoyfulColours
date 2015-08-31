@@ -24,11 +24,13 @@ namespace JoyfulColours.Animations
         {
             startOpacity = Element.Opacity;
             deltaOpacity = Opacity - startOpacity;
+            base.OnStarted();
         }
 
         protected override void OnUpdated()
         {
             Element.Opacity = startOpacity + deltaOpacity * Progress;
+            base.OnUpdated();
         }
     }
 }
