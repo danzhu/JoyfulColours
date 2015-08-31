@@ -33,8 +33,7 @@ namespace JoyfulColours.Animations
 
         public AnimationStep()
         {
-            Started += Start;
-            Updated += Update;
+
         }
 
         public AnimationStep(StepTemplate template, Model model) : this()
@@ -66,7 +65,7 @@ namespace JoyfulColours.Animations
             RotationTargets.Add(end);
         }
 
-        private void Start(object sender, EventArgs e)
+        protected override void OnStarted()
         {
             startTranslations.Clear();
             deltaTranslations.Clear();
@@ -89,9 +88,10 @@ namespace JoyfulColours.Animations
                 startRotations.Add(r.Angle);
                 deltaRotations.Add(IsAbsolute ? end - r.Angle : end);
             }
+            base.OnStarted();
         }
 
-        private void Update(object sender, EventArgs e)
+        protected override void OnUpdated()
         {
             for (int i = 0; i < Translations.Count; i++)
             {
@@ -105,6 +105,7 @@ namespace JoyfulColours.Animations
             {
                 Rotations[i].Angle = startRotations[i] + deltaRotations[i] * Progress;
             }
+            base.OnUpdated();
         }
     }
 

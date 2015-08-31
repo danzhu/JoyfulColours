@@ -32,9 +32,7 @@ namespace JoyfulColours.Elements
         public Skeleton Skeleton { get; set; }
 
         public List<EquipmentTemplate> Equipments { get; } = new List<EquipmentTemplate>();
-
-        public CompiledCode Code { get; set; }
-
+        
         public ModelTemplate(Loader l)
         {
             ID = l.ID;
@@ -72,9 +70,6 @@ namespace JoyfulColours.Elements
                     break;
                 case "equip":
                     Equipments.Add(l.Resource<EquipmentTemplate>(i.String()));
-                    break;
-                case "script":
-                    Code = l.Resource<CompiledCode>(i.String());
                     break;
             }
         }

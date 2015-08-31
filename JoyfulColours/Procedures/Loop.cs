@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyfulColours.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,25 +14,24 @@ namespace JoyfulColours.Procedures
         public Loop(Procedure pro)
         {
             Procedure = pro;
+        }
 
-            pro.Completed += (sender, e) =>
+        protected override void OnStarted()
+        {
+            Event.Once(Procedure, Completed, (sender, e) =>
             {
                 if (!IsStopping)
-                    pro.Start();
+                    Procedure.Start();
                 else
                     Complete();
-            };
-        }
-
-        protected override void OnStarted(EventArgs e)
-        {
+            });
             Procedure.Start();
-            base.OnStarted(e);
+            base.OnStarted();
         }
 
-        protected override void OnStopping(EventArgs e)
+        protected override void OnStopping()
         {
-            base.OnStopping(e);
+            base.OnStopping();
             Procedure.Stop();
         }
     }

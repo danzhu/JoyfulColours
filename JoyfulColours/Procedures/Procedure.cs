@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyfulColours.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,39 +29,39 @@ namespace JoyfulColours.Procedures
         /// <summary>
         /// Occurs when the <see cref="Procedure"/> is started.
         /// </summary>
-        public event EventHandler Started;
+        public const string Started = "started";
 
         /// <summary>
         /// Raises the <see cref="Started"/> event.
         /// </summary>
-        protected virtual void OnStarted(EventArgs e)
+        protected virtual void OnStarted()
         {
-            Started?.Invoke(this, e);
+            Event.Raise(this, Started);
         }
 
         /// <summary>
         /// Start the current <see cref="Procedure"/>.
         /// </summary>
-        public virtual void Start()
+        public void Start()
         {
             if (started)
                 return;
             started = true;
             stopping = false;
-            OnStarted(new EventArgs());
+            OnStarted();
         }
 
         /// <summary>
         /// Occurs when the <see cref="Procedure"/> has completed.
         /// </summary>
-        public event EventHandler Completed;
+        public const string Completed = "completed";
 
         /// <summary>
         /// Raises the <see cref="Completed"/> event.
         /// </summary>
-        protected virtual void OnCompleted(EventArgs e)
+        protected virtual void OnCompleted()
         {
-            Completed?.Invoke(this, e);
+            Event.Raise(this, Completed);
         }
 
         /// <summary>
@@ -72,20 +73,20 @@ namespace JoyfulColours.Procedures
             if (!started)
                 return;
             started = false;
-            OnCompleted(new EventArgs());
+            OnCompleted();
         }
 
         /// <summary>
         /// Occurs when the <see cref="Procedure"/> is skipped.
         /// </summary>
-        public event EventHandler Skipped;
+        public const string Skipped = "skipped";
 
         /// <summary>
         /// Raises the <see cref="Skipped"/> event.
         /// </summary>
-        protected virtual void OnSkipped(EventArgs e)
+        protected virtual void OnSkipped()
         {
-            Skipped?.Invoke(this, e);
+            Event.Raise(this, Skipped);
         }
 
         /// <summary>
@@ -96,21 +97,21 @@ namespace JoyfulColours.Procedures
         {
             if (!started)
                 return;
-            OnSkipped(new EventArgs());
+            OnSkipped();
             Complete();
         }
 
         /// <summary>
         /// Occurs when the <see cref="Procedure"/> is notified to stop.
         /// </summary>
-        public event EventHandler Stopping;
+        public const string Stopping = "stopping";
 
         /// <summary>
         /// Raises the <see cref="Stopping"/> event.
         /// </summary>
-        protected virtual void OnStopping(EventArgs e)
+        protected virtual void OnStopping()
         {
-            Stopping?.Invoke(this, e);
+            Event.Raise(this, Stopping);
         }
         
         /// <summary>
@@ -122,7 +123,7 @@ namespace JoyfulColours.Procedures
             if (!started)
                 return;
             stopping = true;
-            OnStopping(new EventArgs());
+            OnStopping();
         }
     }
 }

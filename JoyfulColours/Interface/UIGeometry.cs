@@ -21,9 +21,9 @@ namespace JoyfulColours.Interface
             Geometry = geometry;
         }
 
-        public void CreateVisual3D(Model model, ref ScriptScope script)
+        public void CreateVisual3D(Model model)
         {
-            UI ui = new UI(UITemplate, ref script);
+            UI ui = new UI(UITemplate);
 
             Viewport2DVisual3D visual = new Viewport2DVisual3D();
             visual.Geometry = Geometry;

@@ -28,12 +28,9 @@ namespace JoyfulColours.Animations
         public CamAnimation(Cam cam)
         {
             Camera = cam;
-
-            Started += Start;
-            Updated += Update;
         }
 
-        private void Start(object sender, EventArgs e)
+        protected override void OnStarted()
         {
             startPosition = Camera.Position;
             startTarget = Camera.Target;
@@ -45,9 +42,10 @@ namespace JoyfulColours.Animations
                 deltaTarget = IsAbsolute ? Target - startTarget : (Vector3D)Target;
             if (LookDirection != null)
                 deltaDirection = IsAbsolute ? LookDirection - startDirection : LookDirection;
+            base.OnStarted();
         }
 
-        private void Update(object sender, EventArgs e)
+        protected override void OnUpdated()
         {
             if (deltaPosition != null)
                 Camera.Position = startPosition + (Vector3D)deltaPosition * Progress;

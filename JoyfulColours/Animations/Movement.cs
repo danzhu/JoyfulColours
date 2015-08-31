@@ -1,5 +1,6 @@
 ﻿using JoyfulColours.Elements;
 using JoyfulColours.Library;
+using JoyfulColours.Logic;
 using JoyfulColours.Procedures;
 using System;
 using System.Collections.Generic;
@@ -29,18 +30,18 @@ namespace JoyfulColours.Animations
             Actor = actor;
 
             Animation = template.Animation.Create(actor);
-            Animation.Completed += TestContinuation;
+            Event.Register(Animation, Completed, TestContinuation);
 
             MovementAnimation = new MovementAnimation(actor);
             MovementAnimation.Duration = template.Animation.Duration / template.Speed;
 
             Completion = template.Completion.Create(actor);
-            Completion.Completed += TestMovement;
+            Event.Register(Completion, Completed, TestMovement);
 
             timeout = new Animation(0.1);
-            timeout.Completed += TestMovement;
+            Event.Register(timeout, Completed, TestMovement);
 
-            Started += TestMovement;
+            Event.Register(this, Started, TestMovement);
         }
 
         private bool CanMove()
@@ -62,7 +63,7 @@ namespace JoyfulColours.Animations
             return true;
         }
 
-        private void TestContinuation(object sender, EventArgs e)
+        private void TestContinuation(object sender, LogicEventArgs e)
         {
             // TODO: Fix bottleneck
             if (!IsStopping && CanMove())
@@ -71,7 +72,7 @@ namespace JoyfulColours.Animations
                 Completion.Start();
         }
 
-        private void TestMovement(object sender, EventArgs e)
+        private void TestMovement(object sender, LogicEventArgs e)
         {
             if (IsStopping)
                 Complete();
@@ -88,22 +89,17 @@ namespace JoyfulColours.Animations
             Animation.Start();
             MovementAnimation.Start();
         }
-
-        protected override void OnStarted(EventArgs e)
-        {
-            base.OnStarted(e);
-        }
-
-        protected override void OnCompleted(EventArgs e)
+        
+        protected override void OnCompleted()
         {
             if (Actor.Movement == this)
                 Actor.Movement = null;
-            base.OnCompleted(e);
+            base.OnCompleted();
         }
 
-        protected override void OnStopping(EventArgs e)
+        protected override void OnStopping()
         {
-            base.OnStopping(e);
+            base.OnStopping();
             Animation.Stop();
         }
     }

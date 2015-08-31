@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyfulColours.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,43 +22,41 @@ namespace JoyfulColours.Procedures
         {
             procedures = pros;
             StopIndex = stopIndex;
-
-            for (int i = 0; i < pros.Count - 1; i++)
-                pros[i].Completed += Advance;
-            pros.Last().Completed += (sender, e) => Complete();
         }
         
-        private void Advance(object sender, EventArgs e)
+        private void Advance(object sender, LogicEventArgs e)
         {
-            if (!IsStarted)
-                return;
-            if (IsStopping && position == StopIndex)
+            if (IsStopping && position == StopIndex || position == procedures.Count - 1)
             {
                 Complete();
                 return;
             }
             Procedure pro = procedures[++position];
+            Event.Once(pro, Completed, Advance);
             pro.Start();
             if (IsStopping)
                 pro.Stop();
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
+            position = 0;
+            Procedure pro = procedures[0];
+            Event.Once(pro, Completed, Advance);
             procedures[position = 0].Start();
-            base.OnStarted(e);
+            base.OnStarted();
         }
 
-        protected override void OnSkipped(EventArgs e)
+        protected override void OnSkipped()
         {
             for (int i = position; i < procedures.Count; i++)
                 procedures[i].Skip();
-            base.OnSkipped(e);
+            base.OnSkipped();
         }
 
-        protected override void OnStopping(EventArgs e)
+        protected override void OnStopping()
         {
-            base.OnStopping(e);
+            base.OnStopping();
             Current.Stop();
         }
     }

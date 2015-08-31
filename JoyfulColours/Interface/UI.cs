@@ -15,39 +15,18 @@ namespace JoyfulColours.Interface
         public UITemplate Template { get; }
 
         public FrameworkElement Visual { get; }
-        public ScriptScope Script { get; }
 
         public UI(UITemplate template)
         {
             Template = template;
 
             Visual = XamlReader.Parse(template.Xaml) as FrameworkElement;
-            if (template.Code != null)
-            {
-                if (Script == null)
-                    Script = Game.Engine.CreateScope();
-                InitializeScript(Script);
-            }
         }
-
-        public UI(UITemplate template, ref ScriptScope scope)
-        {
-            Template = template;
-
-            Visual = XamlReader.Parse(template.Xaml) as FrameworkElement;
-            if (template.Code != null)
-            {
-                if (scope == null)
-                    scope = Game.Engine.CreateScope();
-                InitializeScript(scope);
-            }
-        }
-
+        
         private void InitializeScript(ScriptScope scope)
         {
             scope.SetVariable("ui", Visual);
             InjectElements(scope, Visual);
-            Template.Code.Execute(scope);
         }
 
         private void InjectElements(ScriptScope scope, FrameworkElement e)

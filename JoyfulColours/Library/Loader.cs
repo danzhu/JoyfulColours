@@ -53,14 +53,11 @@ namespace JoyfulColours.Library
             RegisterType(".mtl", l => new MaterialLibrary(l));
             RegisterType(".cam", l => new Cam(l));
             RegisterType(".int", l => new InteractionTemplate(l));
-            RegisterType(".ctr", l => new Control(l), true);
             RegisterType(".mvm", l => new MovementTemplate(l));
 
             // Resources
             RegisterType(".txt", l => l.Read());
-            RegisterType(".py",
-                l => Game.Engine.CreateScriptSourceFromString(l.Read()).Compile());
-            RegisterType(".ns", l => Game.Engine.Execute(l.Read()));
+            RegisterType(".py", l => Game.Engine.Execute(l.Read()), true);
             RegisterType(".wav", l => new SoundPlayer(l.Open()));
         }
 
@@ -132,7 +129,10 @@ namespace JoyfulColours.Library
             if ((l = Game.GetResource(filename)) != null)
                 return l;
             // Use id if all failed
-            return Game.GetResource(Path.GetFileNameWithoutExtension(filename));
+            l = Game.GetResource(Path.GetFileNameWithoutExtension(filename));
+            if (l.ID + l.Extension == filename)
+                return l;
+            return null;
         }
 
         public T Resource<T>(string filename)

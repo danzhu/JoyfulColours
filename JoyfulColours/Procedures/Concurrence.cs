@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyfulColours.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,34 +20,34 @@ namespace JoyfulColours.Procedures
             WaitForAll = wait;
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
             incompleted = new HashSet<Procedure>(procedures);
             foreach (Procedure pro in procedures)
             {
-                pro.Completed += (sender, ex) =>
+                Event.Once(pro, Completed, (sender, ex) =>
                 {
                     incompleted.Remove(pro);
                     if (incompleted.Count == 0 || !WaitForAll)
                         Complete();
-                };
+                });
                 pro.Start();
             }
-            base.OnStarted(e);
+            base.OnStarted();
         }
 
-        protected override void OnSkipped(EventArgs e)
+        protected override void OnSkipped()
         {
             foreach (Procedure pro in procedures)
                 if (incompleted.Contains(pro))
                     pro.Skip();
-            base.OnSkipped(e);
+            base.OnSkipped();
             Complete();
         }
 
-        protected override void OnStopping(EventArgs e)
+        protected override void OnStopping()
         {
-            base.OnStopping(e);
+            base.OnStopping();
             foreach (Procedure pro in incompleted)
             {
                 pro.Stop();

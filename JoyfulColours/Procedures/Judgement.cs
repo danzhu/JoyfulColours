@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JoyfulColours.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,26 +20,26 @@ namespace JoyfulColours.Procedures
             Condition = cond;
             True = proTrue;
             False = proFalse;
-
-            True.Completed += (sender, e) => Complete();
-            if (False != null)
-                False.Completed += (sender, e) => Complete();
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
+            Event.Once(True, Completed, (sender, e) => Complete());
+            if (False != null)
+                Event.Once(False, Completed, (sender, e) => Complete());
+
             if (Result = Condition())
                 True.Start();
             else if (False != null)
                 False.Start();
             else
                 Complete();
-            base.OnStarted(e);
+            base.OnStarted();
         }
 
-        protected override void OnStopping(EventArgs e)
+        protected override void OnStopping()
         {
-            base.OnStopping(e);
+            base.OnStopping();
             if (Result)
                 True.Stop();
             else if (False != null)

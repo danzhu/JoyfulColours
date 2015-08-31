@@ -11,9 +11,7 @@ namespace JoyfulColours.Logic
     public class InteractionTemplate
     {
         public string Name { get; set; }
-
-        public CompiledCode Code { get; set; }
-
+        
         public InteractionTemplate(Loader l)
         {
             foreach (Instruction i in l.Parse())
@@ -26,11 +24,6 @@ namespace JoyfulColours.Logic
             {
                 case "name":
                     Name = i.String();
-                    break;
-                case "script":
-                    Code = l.Find(i.String()).Load<CompiledCode>();
-                    break;
-                default:
                     break;
             }
         }

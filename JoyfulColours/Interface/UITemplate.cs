@@ -17,9 +17,7 @@ namespace JoyfulColours.Interface
     {
         public string ID { get; set; }
         public string Xaml { get; set; }
-
-        public CompiledCode Code { get; set; }
-
+        
         public UITemplate(Loader l)
         {
             ID = l.ID;
@@ -34,11 +32,6 @@ namespace JoyfulColours.Interface
             {
                 case "xaml":
                     Xaml = l.Find(i.String()).Read();
-                    break;
-                case "script":
-                    Code = l.Find(i.String()).Load<CompiledCode>();
-                    break;
-                default:
                     break;
             }
         }

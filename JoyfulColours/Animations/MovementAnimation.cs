@@ -24,12 +24,9 @@ namespace JoyfulColours.Animations
         public MovementAnimation(Actor actor)
         {
             Actor = actor;
-
-            Started += Start;
-            Updated += Update;
         }
 
-        private void Start(object sender, EventArgs e)
+        protected override void OnStarted()
         {
             startPosition = Actor.Position;
             deltaPosition = Position - Actor.Position;
@@ -38,9 +35,10 @@ namespace JoyfulColours.Animations
             startDirection = Actor.Direction;
             deltaDirection = Direction - Actor.Direction;
             Actor.SetDirection(Direction);
+            base.OnStarted();
         }
 
-        private void Update(object sender, EventArgs e)
+        protected override void OnUpdated()
         {
             Point3D p = startPosition + deltaPosition * Progress;
             Actor.Translation.OffsetX = p.X;
@@ -48,6 +46,7 @@ namespace JoyfulColours.Animations
             Actor.Translation.OffsetZ = p.Z;
 
             Actor.Rotation.Angle = startDirection + deltaDirection * Progress;
+            base.OnUpdated();
         }
     }
 }

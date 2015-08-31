@@ -13,9 +13,7 @@ namespace JoyfulColours.Elements
         public string ID { get; set; }
 
         public List<AddonTemplate> Addons { get; } = new List<AddonTemplate>();
-
-        public CompiledCode Code { get; set; }
-
+        
         public EquipmentTemplate(Loader l)
         {
             ID = l.ID;
@@ -30,11 +28,6 @@ namespace JoyfulColours.Elements
             {
                 case "adn":
                     Addons.Add(l.Find(i.String()).Load<AddonTemplate>());
-                    break;
-                case "script":
-                    Code = l.Find(i.String()).Load<CompiledCode>();
-                    break;
-                default:
                     break;
             }
         }

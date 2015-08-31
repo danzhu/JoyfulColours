@@ -18,18 +18,15 @@ namespace JoyfulColours.Animations
         public FadeAnimation(UIElement element)
         {
             Element = element;
-
-            Started += Start;
-            Updated += Update;
         }
 
-        private void Start(object sender, EventArgs e)
+        protected override void OnStarted()
         {
             startOpacity = Element.Opacity;
             deltaOpacity = Opacity - startOpacity;
         }
 
-        private void Update(object sender, EventArgs e)
+        protected override void OnUpdated()
         {
             Element.Opacity = startOpacity + deltaOpacity * Progress;
         }

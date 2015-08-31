@@ -1,4 +1,5 @@
 ﻿using JoyfulColours.Library;
+using JoyfulColours.Logic;
 using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,7 @@ namespace JoyfulColours.Procedures
 
         public bool Startup { get; set; }
         public bool StartOnce { get; set; }
-
-        public CompiledCode Code { get; set; }
-        public ScriptScope Script { get; set; }
-
+        
         public Story(Loader l)
         {
             ID = l.ID;
@@ -38,12 +36,6 @@ namespace JoyfulColours.Procedures
         {
             switch (i.Type)
             {
-                case "script":
-                    Code = l.Find(i.String()).Load<CompiledCode>();
-                    Script = Game.Engine.CreateScope();
-                    Script.SetVariable("story", this);
-                    Code.Execute(Script);
-                    break;
                 case "startup":
                     Startup = i.Bool();
                     break;
@@ -55,11 +47,11 @@ namespace JoyfulColours.Procedures
             }
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
             if (StartOnce && IsCompleted)
                 return;
-            base.OnStarted(e);
+            base.OnStarted();
         }
 
         /// <summary>
@@ -72,17 +64,17 @@ namespace JoyfulColours.Procedures
         /// <param name="completed">
         /// Event handler for <see cref="Procedure.Completed"/>.
         /// </param>
-        public void Link(Procedure pro, EventHandler started = null,
-            EventHandler completed = null)
+        public void Link(Procedure pro, LogicEventHandler started = null,
+            LogicEventHandler completed = null)
         {
-            Started += (sender, e) => pro.Start();
-            Skipped += (sender, e) => pro.Skip();
-            Stopping += (sender, e) => pro.Stop();
-            pro.Completed += (sender, e) => Complete();
+            Event.Register(this, Started, (sender, e) => pro.Start());
+            Event.Register(this, Skipped, (sender, e) => pro.Skip());
+            Event.Register(this, Stopping, (sender, e) => pro.Stop());
+            Event.Register(pro, Completed, (sender, e) => Complete());
             if (started != null)
-                Started += started;
+                Event.Register(this, Started, started);
             if (completed != null)
-                Completed += completed;
+                Event.Register(this, Completed, completed);
         }
 
         public override string ToString() => $"{nameof(Story)} \"{ID}\"";

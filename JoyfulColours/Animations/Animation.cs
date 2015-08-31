@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Linq;
 using System.Windows.Threading;
+using JoyfulColours.Logic;
 
 namespace JoyfulColours.Animations
 {
@@ -96,43 +97,46 @@ namespace JoyfulColours.Animations
         /// the newer animation.
         /// </para>
         /// </summary>
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
             startTime = time;
             progress = 0;
             animations.Add(this);
-            base.OnStarted(e);
+            base.OnStarted();
+        }
+        
+        /// <summary>
+        /// Derived classes need to override this method to update their own animations.
+        /// </summary>
+        protected virtual void OnUpdated()
+        {
+            // Do nothing: individual animations update their own animation here
         }
 
-        public event EventHandler Updated;
-        protected virtual void OnUpdated(EventArgs e)
-        {
-            Updated?.Invoke(this, e);
-        }
         private void Update()
         {
             // TODO: Make progress optional
             double p = (time - startTime) / Duration;
             progress = Easing(Math.Min(p, 1.0));
-            OnUpdated(new EventArgs());
+            OnUpdated();
             if (p >= 1.0)
                 Complete();
         }
 
-        protected override void OnCompleted(EventArgs e)
+        protected override void OnCompleted()
         {
             animations.Remove(this);
-            base.OnCompleted(e);
+            base.OnCompleted();
         }
 
-        protected override void OnSkipped(EventArgs e)
+        protected override void OnSkipped()
         {
             // Set progress to done
             progress = 1.0;
             // Raise update event immediate to finish animation
-            OnUpdated(new EventArgs());
+            OnUpdated();
 
-            base.OnSkipped(e);
+            base.OnSkipped();
         }
     }
 }

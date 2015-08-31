@@ -17,11 +17,11 @@ namespace JoyfulColours.Procedures
             Consequences = cons;
         }
 
-        protected override void OnCompleted(EventArgs e)
+        protected override void OnCompleted()
         {
             if (Result >= 0 && Result < Consequences?.Count)
                 Consequences[Result].Start();
-            base.OnCompleted(e);
+            base.OnCompleted();
         }
 
         public void Complete(int result)

@@ -6,37 +6,37 @@ using System.Threading.Tasks;
 
 namespace JoyfulColours.Procedures
 {
-    public class Event : Procedure
+    public class Execution : Procedure
     {
         public Action Action { get; }
 
-        public Event(Action action = null)
+        public Execution(Action action = null)
         {
             Action = action;
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
-            base.OnStarted(e);
+            base.OnStarted();
             Action?.Invoke();
             Complete();
         }
     }
 
-    public class Event<T> : Procedure
+    public class Execution<T> : Procedure
     {
         public Action<T> Action { get; }
         public T Data { get; }
 
-        public Event(Action<T> action, T data)
+        public Execution(Action<T> action, T data)
         {
             Action = action;
             Data = data;
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
-            base.OnStarted(e);
+            base.OnStarted();
             Action(Data);
             Complete();
         }

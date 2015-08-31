@@ -13,42 +13,15 @@ namespace JoyfulColours
 {
     public class Control : Procedure
     {
-        public string ID { get; }
-
         public bool Startup { get; set; }
 
         public Dictionary<Key, Procedure> Keys { get; } = new Dictionary<Key, Procedure>();
-
-        public CompiledCode Code { get; set; }
-        public ScriptScope Script { get; set; }
-
-        public Control(Loader l)
+        
+        public Control()
         {
-            ID = l.ID;
 
-            foreach (Instruction i in l.Parse())
-                Load(l, i);
-
-            if (Startup)
-                Start();
         }
-
-        public virtual void Load(Loader l, Instruction i)
-        {
-            switch (i.Type)
-            {
-                case "script":
-                    Code = l.Find(i.String()).Load<CompiledCode>();
-                    Script = Game.Engine.CreateScope();
-                    Script.SetVariable("control", this);
-                    Code.Execute(Script);
-                    break;
-                case "startup":
-                    Startup = i.Bool();
-                    break;
-            }
-        }
-
+        
         public void RegisterKey(string key, Procedure pro)
         {
             Key k;
@@ -56,18 +29,16 @@ namespace JoyfulColours
             Keys.Add(k, pro);
         }
 
-        protected override void OnStarted(EventArgs e)
+        protected override void OnStarted()
         {
             Input.Register(this);
-            base.OnStarted(e);
+            base.OnStarted();
         }
 
-        protected override void OnCompleted(EventArgs e)
+        protected override void OnCompleted()
         {
             Input.Unregister(this);
-            base.OnCompleted(e);
+            base.OnCompleted();
         }
-
-        public override string ToString() => $"{nameof(Control)} {ID}";
     }
 }

@@ -20,9 +20,7 @@ namespace JoyfulColours.Elements
 
         public Dictionary<string, Node> Nodes { get; } = new Dictionary<string, Node>();
         public List<Equipment> Equipments { get; } = new List<Equipment>();
-
-        public ScriptScope Script { get; set; }
-
+        
         public Model(ModelTemplate template)
         {
             Template = template;
@@ -38,17 +36,14 @@ namespace JoyfulColours.Elements
             // Load equipments
             foreach (EquipmentTemplate et in template.Equipments)
                 Equip(new Equipment(et));
-
-            // Setup and execute script
-            ScriptScope script = template.Code.Load("model", this);
-
+            
             // Add UIs and execute scripts within block
             foreach (var item in template.UITemplates.Values)
             {
                 // TODO: Remove ugly ref
-                item.CreateVisual3D(this, ref script);
+                item.CreateVisual3D(this);
             }
-            Script = script;
+            // TODO: Alternate access to UI
         }
 
         private Node LoadNode(NodeTemplate nt)

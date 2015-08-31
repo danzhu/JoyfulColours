@@ -72,6 +72,7 @@
     <Compile Include="Animations\MovementTemplate.cs" />
     <Compile Include="Animations\MovementAnimation.cs" />
     <Compile Include="Animations\StepTemplate.cs" />
+    <Compile Include="Library\Extensions.cs" />
     <Compile Include="Logic\Control.cs" />
     <Compile Include="Elements\Actor.cs" />
     <Compile Include="Elements\ActorTemplate.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Interface\Cinema.cs" />
     <Compile Include="Library\Direction.cs" />
     <Compile Include="Library\Easing.cs" />
-    <Compile Include="Library\Extensions.cs" />
+    <Compile Include="Logic\Event.cs" />
     <Compile Include="Logic\Interaction.cs" />
     <Compile Include="Logic\InteractionTemplate.cs" />
     <Compile Include="Procedures\Judgement.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="Library\Loader.cs" />
     <Compile Include="Procedures\Choice.cs" />
     <Compile Include="Procedures\Concurrence.cs" />
-    <Compile Include="Procedures\Event.cs" />
+    <Compile Include="Procedures\Execution.cs" />
     <Compile Include="Procedures\Loop.cs" />
     <Compile Include="Procedures\Sequence.cs" />
     <Compile Include="Procedures\Procedure.cs" />

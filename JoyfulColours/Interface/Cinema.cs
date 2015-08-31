@@ -1,4 +1,6 @@
 ﻿using JoyfulColours.Animations;
+using JoyfulColours.Logic;
+using JoyfulColours.Procedures;
 using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Generic;
@@ -34,10 +36,10 @@ namespace JoyfulColours.Interface
             FadeAnimation anim = new FadeAnimation(fade);
             anim.Duration = duration;
             anim.Opacity = 1;
-            anim.Started += (sender, e) =>
+            Event.Register(anim, Procedure.Started, (sender, e) =>
             {
                 fade.Background = brush.ConvertFromString(color) as SolidColorBrush;
-            };
+            });
             return anim;
         }
 
@@ -52,12 +54,15 @@ namespace JoyfulColours.Interface
         public static Animation Subtitle(string text, double duration)
         {
             Animation anim = new Animation(duration);
-            anim.Started += (sender, e) =>
+            Event.Register(anim, Procedure.Started, (sender, e) =>
             {
                 subtitle.Visibility = Visibility.Visible;
                 subtitle.Text = text;
-            };
-            anim.Completed += (sender, e) => subtitle.Visibility = Visibility.Collapsed;
+            });
+            Event.Register(anim, Procedure.Completed, (sender, e) =>
+            {
+                subtitle.Visibility = Visibility.Collapsed;
+            });
             return anim;
         }
 
@@ -65,7 +70,7 @@ namespace JoyfulColours.Interface
         {
             // TODO: Notify player
         }
-        
+
         public static void AddUI(UI ui)
         {
             grid.Children.Add(ui.Visual);
