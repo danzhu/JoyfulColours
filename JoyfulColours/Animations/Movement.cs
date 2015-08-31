@@ -56,8 +56,16 @@ namespace JoyfulColours.Animations
                 offset = offset.Rotate(Actor.Direction);
             pos = Actor.Position.Offset(offset);
 
-            if (!Game.Scene.CanPassThrough(pos))
-                return false;
+            // TODO: Test actor
+            Model m = Game.Scene[pos];
+            if (m != null)
+            {
+                // Raise event whenever there's something ahead
+                Event.Raise(m, Model.Collided);
+                // Don't go if it collidable (or you will get hit!)
+                if (m.Template.IsCollidable)
+                    return false;
+            }
 
             dir = Actor.Direction.Offset(Template.DirectionOffset);
             return true;
@@ -89,7 +97,7 @@ namespace JoyfulColours.Animations
             Animation.Start();
             MovementAnimation.Start();
         }
-        
+
         protected override void OnCompleted()
         {
             if (Actor.Movement == this)

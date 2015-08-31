@@ -100,6 +100,8 @@ namespace JoyfulColours.Elements
             OnInteracted(i);
         }
 
+        public const string Collided = "collided";
+
         public override string ToString() => $"{nameof(Model)} \"{Template.ID}\"";
     }
 }
