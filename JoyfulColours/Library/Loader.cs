@@ -54,6 +54,7 @@ namespace JoyfulColours.Library
             RegisterType(".cam", l => new Cam(l));
             RegisterType(".int", l => new InteractionTemplate(l));
             RegisterType(".mvm", l => new MovementTemplate(l));
+            RegisterType(".ctr", l => new Control(l), true);
 
             // Resources
             RegisterType(".txt", l => l.Read());

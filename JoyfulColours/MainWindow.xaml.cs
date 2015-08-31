@@ -62,14 +62,14 @@ namespace JoyfulColours
             else
             {
                 if (!consoleMode)
-                    Input.SendKeyDown(e);
+                    Control.SendKeyDown(e);
             }
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (!consoleMode)
-                Input.SendKeyUp(e);
+                Control.SendKeyUp(e);
         }
 
         private void input_KeyDown(object sender, KeyEventArgs e)

@@ -93,7 +93,6 @@
     <Compile Include="Logic\Interaction.cs" />
     <Compile Include="Logic\InteractionTemplate.cs" />
     <Compile Include="Procedures\Judgement.cs" />
-    <Compile Include="Logic\Input.cs" />
     <Compile Include="Elements\Lamp.cs" />
     <Compile Include="Elements\Element.cs" />
     <Compile Include="Library\Loader.cs" />

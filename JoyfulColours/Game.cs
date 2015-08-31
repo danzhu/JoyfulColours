@@ -3,6 +3,7 @@ using JoyfulColours.Animations;
 using JoyfulColours.Elements;
 using JoyfulColours.Interface;
 using JoyfulColours.Library;
+using JoyfulColours.Logic;
 using JoyfulColours.Procedures;
 using Microsoft.Scripting.Hosting;
 using System;
@@ -92,9 +93,14 @@ namespace JoyfulColours
             Load();
         }
 
+        public const string Loaded = "loaded";
+
         public static void Load()
         {
-            Engine.ExecuteFile("startup.py");
+            // TODO: Make loading more flexible
+            LoadLooseFiles("data");
+            LoadQueued();
+            Event.Raise(typeof(Game), Loaded);
         }
 
         public static void LoadArchive(string path)

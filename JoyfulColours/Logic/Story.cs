@@ -17,8 +17,7 @@ namespace JoyfulColours.Procedures
         /// Represents if the story has been completed at least once.
         /// </summary>
         public bool IsCompleted { get; }
-
-        public bool Startup { get; set; }
+        
         public bool StartOnce { get; set; }
         
         public Story(Loader l)
@@ -27,9 +26,6 @@ namespace JoyfulColours.Procedures
 
             foreach (Instruction i in l.Parse())
                 Load(l, i);
-
-            if (Startup)
-                Start();
         }
 
         public virtual void Load(Loader l, Instruction i)
@@ -37,7 +33,8 @@ namespace JoyfulColours.Procedures
             switch (i.Type)
             {
                 case "startup":
-                    Startup = i.Bool();
+                    if (i.Bool())
+                        Event.Once(typeof(Game), Game.Loaded, (sender, e) => Start());
                     break;
                 case "once": // TODO: Add flags for game saves (though far, far away...)
                     StartOnce = i.Bool();

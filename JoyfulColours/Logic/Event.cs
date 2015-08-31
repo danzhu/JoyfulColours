@@ -59,6 +59,21 @@ namespace JoyfulColours.Logic
         {
             units.GetOrNew(target).GetOrNew(name).Override(handler);
         }
+
+        public static LogicEventHandler Chain(object target)
+        {
+            return (sender, e) => Raise(target, e.Name, e.Args);
+        }
+
+        public static LogicEventHandler Chain(object target, string name)
+        {
+            return (sender, e) => Raise(target, name, e.Args);
+        }
+
+        public static LogicEventHandler Chain(object target, string name, params object[] args)
+        {
+            return (sender, e) => Raise(target, name, args);
+        }
     }
     
     public class LogicHandler
