@@ -1,0 +1,48 @@
+node Body
+cent 0.5 1.2 0.5
+axis 0 1 0
+
+node Head
+par Body
+cent 0.5 1.6 0.5
+axis 0 1 0
+
+node LeftArmUpper
+par Body
+cent 0.25 1.4 0.5
+axis 1 0 0
+
+node LeftArmLower
+par LeftArmUpper
+cent 0.25 1.1 0.5
+axis 1 0 0
+
+node RightArmUpper
+par Body
+cent 0.75 1.4 0.5
+axis 1 0 0
+
+node RightArmLower
+par RightArmUpper
+cent 0.75 1.1 0.5
+axis 1 0 0
+
+node LeftLegUpper
+par Body
+cent 0.4 0.825 0.5
+axis 1 0 0
+
+node LeftLegLower
+par LeftLegUpper
+cent 0.4 0.475 0.5
+axis 1 0 0
+
+node RightLegUpper
+par Body
+cent 0.6 0.825 0.5
+axis 1 0 0
+
+node RightLegLower
+par RightLegUpper
+cent 0.6 0.475 0.5
+axis 1 0 0

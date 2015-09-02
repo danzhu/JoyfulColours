@@ -1,0 +1,2 @@
+1>------ Build started: Project: MyLife, Configuration: Single ------
+  MyLife.cpp

@@ -1,0 +1,31 @@
+pos 8.5 2.29 11.75
+tar 8.5 2.14 11.35
+
+anim back
+ease out
+dur 2
+abs true
+pos 8.5 2.3 12.5
+tar 8.5 2.25 11.5
+
+anim left
+ease out
+dur 1
+abs true
+dir -1 -0.3 0
+
+anim title
+dur 5
+abs true
+pos 8.5 2.5 13.5
+tar 8 2.4 11.7
+
+anim screen
+dur 1
+abs true
+pos 8.5 2.29 11.75
+tar 8.5 2.14 11.35
+
+anim pan
+dur 5
+pos -5 0 0

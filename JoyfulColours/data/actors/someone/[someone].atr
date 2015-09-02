@@ -1,0 +1,6 @@
+name Someone
+model someone.obj
+skl human
+equip female_hair01
+equip shirt
+equip trousers

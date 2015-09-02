@@ -1,0 +1,15 @@
+anim walk_0.pos
+dur 0.2
+ease out
+
+anim walk_1.pos
+dur 0.2
+ease in
+
+anim walk_2.pos -stop
+dur 0.2
+ease out
+
+anim walk_3.pos
+dur 0.2
+ease in

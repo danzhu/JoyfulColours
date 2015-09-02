@@ -1,0 +1,11 @@
+#include <life.h>
+
+int life(person &me)
+{
+    while (is_alive(me))
+    {
+        me.write_programs();
+        me.sleep();
+    }
+    return 0;
+}

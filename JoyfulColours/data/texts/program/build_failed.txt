@@ -1,0 +1,2 @@
+1>C:\\MyLife\\mylife.cpp(8): error CS2048: someone expected
+========== Build: 0 succeeded, 1 failed, 0 up-to-date, 0 skipped ==========

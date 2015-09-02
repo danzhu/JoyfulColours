@@ -1,0 +1,17 @@
+dur 0.2
+t Body 0 0 0
+r Body 0
+
+r Head 0
+
+r LeftArmUpper 0
+r RightArmUpper 0
+
+r LeftArmLower 0
+r RightArmLower 0
+
+r LeftLegUpper 0
+r RightLegUpper 0
+
+r LeftLegLower 0
+r RightLegLower 0

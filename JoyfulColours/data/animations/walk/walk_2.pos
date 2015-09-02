@@ -1,0 +1,16 @@
+t Body 0 0 0
+r Body 0
+
+r Head 0
+
+r LeftArmUpper 10
+r RightArmUpper -20
+
+r LeftArmLower 40
+r RightArmLower 5
+
+r LeftLegUpper -10
+r RightLegUpper 30
+
+r LeftLegLower -20
+r RightLegLower -10

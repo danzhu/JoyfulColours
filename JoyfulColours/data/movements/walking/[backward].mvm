@@ -1,0 +1,3 @@
+anim walk.anm
+pos 0 0 1
+cmp stand.anm

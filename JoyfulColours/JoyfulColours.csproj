@@ -107,6 +107,14 @@
     <Compile Include="Interface\UI.cs" />
     <Compile Include="Interface\UITemplate.cs" />
     <Compile Include="Interface\UIGeometry.cs" />
+    <Page Include="data\uis\console\console.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="data\uis\dialogs\dialogs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +153,154 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="data\actors\someone\someone.mtl" />
+    <None Include="data\actors\someone\someone.obj" />
+    <None Include="data\actors\someone\[someone].atr" />
+    <None Include="data\animations\skeletons\[human].skl" />
+    <None Include="data\animations\stand\stand.pos" />
+    <None Include="data\animations\stand\[stand].anm" />
+    <None Include="data\animations\walk\walk_0.pos" />
+    <None Include="data\animations\walk\walk_1.pos" />
+    <None Include="data\animations\walk\walk_2.pos" />
+    <None Include="data\animations\walk\walk_3.pos" />
+    <None Include="data\animations\walk\[walk].anm" />
+    <None Include="data\animations\[sit].pos" />
+    <None Include="data\controls\movement\movement.py" />
+    <None Include="data\controls\movement\[movement].ctr" />
+    <None Include="data\equipments\dress\dress_body.adn" />
+    <None Include="data\equipments\dress\dress_body.mtl" />
+    <None Include="data\equipments\dress\dress_body.obj" />
+    <None Include="data\equipments\dress\[dress].eqp" />
+    <None Include="data\equipments\hair\female_hair01.mtl" />
+    <None Include="data\equipments\hair\female_hair01.obj" />
+    <None Include="data\equipments\hair\female_hair01_head.adn" />
+    <None Include="data\equipments\hair\male_hair01.mtl" />
+    <None Include="data\equipments\hair\male_hair01.obj" />
+    <None Include="data\equipments\hair\male_hair01_head.adn" />
+    <None Include="data\equipments\hair\[female_hair01].eqp" />
+    <None Include="data\equipments\hair\[male_hair01].eqp" />
+    <None Include="data\equipments\pants\pants_leftupper.adn" />
+    <None Include="data\equipments\pants\pants_leftupper.mtl" />
+    <None Include="data\equipments\pants\pants_leftupper.obj" />
+    <None Include="data\equipments\pants\pants_rightupper.adn" />
+    <None Include="data\equipments\pants\pants_rightupper.mtl" />
+    <None Include="data\equipments\pants\pants_rightupper.obj" />
+    <None Include="data\equipments\pants\[pants].eqp" />
+    <None Include="data\equipments\shirt\shirt_body.adn" />
+    <None Include="data\equipments\shirt\shirt_body.mtl" />
+    <None Include="data\equipments\shirt\shirt_body.obj" />
+    <None Include="data\equipments\shirt\shirt_leftarm.adn" />
+    <None Include="data\equipments\shirt\shirt_leftarm.mtl" />
+    <None Include="data\equipments\shirt\shirt_leftarm.obj" />
+    <None Include="data\equipments\shirt\shirt_rightarm.adn" />
+    <None Include="data\equipments\shirt\shirt_rightarm.mtl" />
+    <None Include="data\equipments\shirt\shirt_rightarm.obj" />
+    <None Include="data\equipments\shirt\[shirt].eqp" />
+    <None Include="data\equipments\trousers\trousers_leftlower.adn" />
+    <None Include="data\equipments\trousers\trousers_leftlower.mtl" />
+    <None Include="data\equipments\trousers\trousers_leftlower.obj" />
+    <None Include="data\equipments\trousers\trousers_leftupper.adn" />
+    <None Include="data\equipments\trousers\trousers_leftupper.mtl" />
+    <None Include="data\equipments\trousers\trousers_leftupper.obj" />
+    <None Include="data\equipments\trousers\trousers_rightlower.adn" />
+    <None Include="data\equipments\trousers\trousers_rightlower.mtl" />
+    <None Include="data\equipments\trousers\trousers_rightlower.obj" />
+    <None Include="data\equipments\trousers\trousers_rightupper.adn" />
+    <None Include="data\equipments\trousers\trousers_rightupper.mtl" />
+    <None Include="data\equipments\trousers\trousers_rightupper.obj" />
+    <None Include="data\equipments\trousers\[trousers].eqp" />
+    <None Include="data\globals\[player].py" />
+    <None Include="data\interactions\use\use.py" />
+    <None Include="data\interactions\use\[use].int" />
+    <None Include="data\models\board\board01.mtl" />
+    <None Include="data\models\board\board01.obj" />
+    <None Include="data\models\board\[board01].mt" />
+    <None Include="data\models\ceiling\ceiling.mtl" />
+    <None Include="data\models\ceiling\ceiling.obj" />
+    <None Include="data\models\ceiling\[ceiling].mt" />
+    <None Include="data\models\chair\chair.mtl" />
+    <None Include="data\models\chair\chair.obj" />
+    <None Include="data\models\chair\[chair].mt" />
+    <None Include="data\models\desk\desk.mtl" />
+    <None Include="data\models\desk\desk.obj" />
+    <None Include="data\models\desk\[desk].mt" />
+    <None Include="data\models\door\door.mtl" />
+    <None Include="data\models\door\door.obj" />
+    <None Include="data\models\door\[door].mt" />
+    <None Include="data\models\floor\floor.mtl" />
+    <None Include="data\models\floor\floor.obj" />
+    <None Include="data\models\floor\[floor].mt" />
+    <None Include="data\models\joy\joy.mtl" />
+    <None Include="data\models\joy\joy.obj" />
+    <None Include="data\models\joy\[joy].mt" />
+    <None Include="data\models\laptop\laptop.mtl" />
+    <None Include="data\models\laptop\laptop.obj" />
+    <None Include="data\models\laptop\[laptop].mt" />
+    <None Include="data\models\solid\solid.mtl" />
+    <None Include="data\models\solid\solid.obj" />
+    <None Include="data\models\solid\[solid].mt" />
+    <None Include="data\models\students\student01.mtl" />
+    <None Include="data\models\students\student01.obj" />
+    <None Include="data\models\students\student02.mtl" />
+    <None Include="data\models\students\student02.obj" />
+    <None Include="data\models\students\student03.mtl" />
+    <None Include="data\models\students\student03.obj" />
+    <None Include="data\models\students\[student01].mt" />
+    <None Include="data\models\students\[student02].mt" />
+    <None Include="data\models\students\[student03].mt" />
+    <None Include="data\models\stuff\stuff01.mtl" />
+    <None Include="data\models\stuff\stuff01.obj" />
+    <None Include="data\models\stuff\stuff02.mtl" />
+    <None Include="data\models\stuff\stuff02.obj" />
+    <None Include="data\models\stuff\stuff03.mtl" />
+    <None Include="data\models\stuff\stuff03.obj" />
+    <None Include="data\models\stuff\stuff04.mtl" />
+    <None Include="data\models\stuff\stuff04.obj" />
+    <None Include="data\models\stuff\stuff05.mtl" />
+    <None Include="data\models\stuff\stuff05.obj" />
+    <None Include="data\models\stuff\[stuff01].mt" />
+    <None Include="data\models\stuff\[stuff02].mt" />
+    <None Include="data\models\stuff\[stuff03].mt" />
+    <None Include="data\models\stuff\[stuff04].mt" />
+    <None Include="data\models\stuff\[stuff05].mt" />
+    <None Include="data\models\surface\surface.mtl" />
+    <None Include="data\models\surface\surface.obj" />
+    <None Include="data\models\surface\[surface].mt" />
+    <None Include="data\models\table\table.mtl" />
+    <None Include="data\models\table\table.obj" />
+    <None Include="data\models\table\[table].mt" />
+    <None Include="data\models\wall\wall.mtl" />
+    <None Include="data\models\wall\wall.obj" />
+    <None Include="data\models\wall\[wall].mt" />
+    <None Include="data\models\whiteboard\whiteboard.mtl" />
+    <None Include="data\models\whiteboard\whiteboard.obj" />
+    <None Include="data\models\whiteboard\[whiteboard].mt" />
+    <None Include="data\models\windowtop\windowtop.mtl" />
+    <None Include="data\models\windowtop\windowtop.obj" />
+    <None Include="data\models\windowtop\[windowtop].mt" />
+    <None Include="data\models\window\window.mtl" />
+    <None Include="data\models\window\window.obj" />
+    <None Include="data\models\window\[window].mt" />
+    <None Include="data\movements\walking\[backward].mvm" />
+    <None Include="data\movements\walking\[forward].mvm" />
+    <None Include="data\movements\walking\[left].mvm" />
+    <None Include="data\movements\walking\[right].mvm" />
+    <None Include="data\scenes\classroom\def.cam" />
+    <None Include="data\scenes\classroom\front.cam" />
+    <None Include="data\scenes\classroom\top.cam" />
+    <None Include="data\scenes\classroom\walk.cam" />
+    <None Include="data\scenes\classroom\[classroom].scn" />
+    <None Include="data\scenes\classroom\[screen].cam" />
+    <None Include="data\scenes\test\[def].cam" />
+    <None Include="data\scenes\test\[test].scn" />
+    <None Include="data\stories\intro\intro.py" />
+    <None Include="data\stories\intro\[intro].st" />
+    <None Include="data\stories\nothing\nothing.py" />
+    <None Include="data\stories\nothing\[nothing].st" />
+    <None Include="data\uis\console\console.py" />
+    <None Include="data\uis\console\[console].ui" />
+    <None Include="data\uis\dialogs\dialogs.py" />
+    <None Include="data\uis\dialogs\[dialogs].ui" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -154,7 +310,22 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\music\Across the Stars.wav" />
+    <Content Include="data\music\Imagining %28Doggie Ver.%29.wav" />
+    <Content Include="data\music\Imagining.wav" />
+    <Resource Include="data\texts\intro\ascii.txt" />
+    <Resource Include="data\texts\intro\intro.txt" />
+    <Resource Include="data\texts\intro\letter.txt" />
+    <Resource Include="data\texts\intro\title.txt" />
+    <Resource Include="data\texts\program\build_failed.txt" />
+    <Resource Include="data\texts\program\build_started.txt" />
+    <Resource Include="data\texts\program\MyLife.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy "$(ProjectDir)data" "$(TargetDir)data" /e /q /y</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

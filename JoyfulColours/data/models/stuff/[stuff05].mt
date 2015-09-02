@@ -1,0 +1,1 @@
+model stuff05.obj
