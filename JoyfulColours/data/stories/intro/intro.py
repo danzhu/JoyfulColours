@@ -9,7 +9,7 @@ def Text(name):
 
 scene = Game.Get('classroom')
 cam = Game.Get('screen')
-surf = scene['surf'].UIs['Display'].Script
+#surf = scene['surf'].UIs['Display'].Script
 
 #ui = UI(Game.Get('dialogs'))
 #Dialog = ui.Script.Dialog
@@ -24,12 +24,12 @@ def Complete(sender, e):
 
 Game.Get('intro').Link(Sequence([
     Concurrence({
-        surf.Type(Text('title')),
+        #surf.Type(Text('title')),
         Sequence([
             Cinema.Subtitle(line, len(line) / 30 + 2) for line in Text('intro').splitlines()
             ])
         }),
-    surf.Print(Text('ascii')),
+    #surf.Print(Text('ascii')),
     Animation(1),
     cam.Animations['back'],
     #Dialog('Hi', 'Hello', '123', '456', None),
